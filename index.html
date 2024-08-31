@@ -95,7 +95,7 @@
             // Updated loadMedia function
             async function loadMedia() {
                 try {
-                    const response = await fetch('/gridWoooorld');
+                    const response = await fetch('/gridWoooorld/content/');
                     const data = await response.text();
                     const parser = new DOMParser();
                     const htmlDoc = parser.parseFromString(data, 'text/html');
