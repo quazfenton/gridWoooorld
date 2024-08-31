@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zine</title>
+    <title>gridWorld</title>
     <style>
         body, html {
             margin: 0;
@@ -95,31 +95,33 @@
             // Updated loadMedia function
             async function loadMedia() {
                 try {
-                    const response = await fetch('main/content');
-                    const data = await response.text();
-                    const parser = new DOMParser();
-                    const htmlDoc = parser.parseFromString(data, 'text/html');
-                    const links = htmlDoc.getElementsByTagName('a');
+                    const username = 'quazf';
+                    const repo = 'gridWoooorld';
+                    const path = 'content';
+                    const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${path}`;
 
-                    for (let link of links) {
-                        const href = link.getAttribute('href');
-                        if (href.match(/\.(jpe?g|png|gif)$/i)) {
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+
+                    for (let item of data) {
+                        const fileUrl = item.download_url;
+                        if (fileUrl.match(/\.(jpe?g|png|gif)$/i)) {
                             const img = document.createElement('img');
-                            img.src = href;
-                            img.alt = href;
-                            img.addEventListener('click', () => expandMedia(href, 'image'));
+                            img.src = fileUrl;
+                            img.alt = item.name;
+                            img.addEventListener('click', () => expandMedia(fileUrl, 'image'));
                             gallery.appendChild(img);
-                            mediaItems.push({ type: 'image', src: href });
-                        } else if (href.match(/\.mp4$/i)) {
+                            mediaItems.push({ type: 'image', src: fileUrl });
+                        } else if (fileUrl.match(/\.mp4$/i)) {
                             const video = document.createElement('video');
-                            video.src = href;
+                            video.src = fileUrl;
                             video.muted = true;
                             video.loop = true;
                             video.addEventListener('mouseover', () => video.play());
                             video.addEventListener('mouseout', () => video.pause());
-                            video.addEventListener('click', () => expandMedia(href, 'video'));
+                            video.addEventListener('click', () => expandMedia(fileUrl, 'video'));
                             gallery.appendChild(video);
-                            mediaItems.push({ type: 'video', src: href });
+                            mediaItems.push({ type: 'video', src: fileUrl });
                         }
                     }
                 } catch (error) {
