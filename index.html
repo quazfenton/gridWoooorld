@@ -33,6 +33,7 @@
             margin-right: -15px; /* Negative margin for horizontal overlap */
             margin-bottom: -15px; /* Negative margin for vertical overlap */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Optional: adds depth */
+            border-radius: 10px; /* Add this line for rounded corners */
         }
         .gallery img:nth-child(odd), .gallery video:nth-child(odd) {
             transform: translateY(-5px); /* Slight upward offset for odd items */
@@ -42,7 +43,7 @@
         }
         .gallery img:hover, .gallery video:hover {
             transform: scale(1.05) translateY(0); /* Reset vertical offset on hover */
-            z-index: 1; /* Bring hovered item to front */
+            z-index: 1.5; /* Bring hovered item to front */
         }
         .fullscreen {
             position: fixed;
